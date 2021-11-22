@@ -8,15 +8,13 @@ import FormSubmit from "./inputs/FormLargeButton.vue";
 const singupLink = ref("#");
 const termsLink = ref("#");
 
-const onlyLetters = str =>
-  /^[a-zA-Z]+(([',. -][a-zA-Z ])?[a-zA-Z]*)*$/g.test(str);
+const isName = str => /^[\p{Alpha}\-\s]+$/gu.test(str);
 const isEmail = str =>
   /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test(
     str,
   );
 const length = len => str => str.length >= len;
-const isPhone = str =>
-  /^[+]*[(]{0,1}[0-9]{1,4}[)]{0,1}[-\s\./0-9]*$/g.test(str);
+const isPhone = str => /^[+]*[(]{0,1}[0-9]{1,4}[)]{0,1}[-\s\./0-9]*$/.test(str);
 
 function valide() {
   return !this.validators.find(validator => !validator(this.value));
@@ -28,7 +26,7 @@ const fields = {
     type: "text",
     name: "Имя",
     placeholder: "Введите ваше имя",
-    validators: [onlyLetters],
+    validators: [isName],
     valide,
   },
   email: {
